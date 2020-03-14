@@ -7,14 +7,14 @@ const categories = [
     process.env.CATEGORY_OTHERS || 'others'
 ];
 
-const countTexts = parseInt(process.env.COUNT_TEXTS) || 36;
+const countTexts = parseInt(process.env.COUNT_TEXTS) || 5;
 
-const stopWordsMetricBoundary = parseFloat(
-    process.env.STOP_WORDS_METRIC_BOUNDARY
-) || 0.0003;
-const termsMetricBoundary = parseFloat(
-    process.env.TERMS_METRIC_BOUNDARY
-) || 0.0002;
+const stopWordsPercent = parseFloat(
+    process.env.STOP_WORDS_PERCENT
+) || 0.2;
+const termsPercent = parseFloat(
+    process.env.TERMS_PERCENT
+) || 0.4;
 
 const outputFolder = process.env.OUTPUT_DATA || './output-data';
 
@@ -23,7 +23,7 @@ module.exports = {
     corpusRootDirectory,
     categories,
     countTexts,
-    stopWordsMetricBoundary,
-    termsMetricBoundary,
+    stopWordsPercent,
+    termsPercent,
     outputFolder
 };

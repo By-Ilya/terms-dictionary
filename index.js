@@ -1,8 +1,8 @@
 const {
     categories,
     countTexts,
-    stopWordsMetricBoundary,
-    termsMetricBoundary
+    stopWordsPercent,
+    termsPercent
 } = require('./config');
 const getCorpusByCategory = require('./helpers/corpusHelper');
 const calculateTFIDF = require('./api/TF-IDF');
@@ -25,14 +25,14 @@ run = async () => {
 
     console.log(`Creating stop words dictionary...`);
     const stopWordsDictionary = calculateMetricAndCreateDictionary(
-        allTexts, stopWordsMetricBoundary
+        allTexts, stopWordsPercent
     );
     await writeDictionaryToFile(stopWordsDictionary, 'stopWords');
 
     for (let i = 0; i <= categories.length - 2; i++) {
         console.log(`Creating dictionary for category: ${categories[i]}...`);
         const categoryDictionary = calculateMetricAndCreateDictionary(
-            corps[i], termsMetricBoundary, stopWordsDictionary
+            corps[i], termsPercent, stopWordsDictionary
         );
         await writeDictionaryToFile(categoryDictionary, categories[i]);
     }
@@ -42,26 +42,29 @@ run = async () => {
 };
 
 calculateMetricAndCreateDictionary = (
-    corpus, metricBoundary, stopWordsDictionary = undefined
+    corpus, wordsPercent, stopWordsDictionary = undefined
 ) => {
     const tfIdfCorpus = calculateTFIDF(corpus);
     return createDictionaryWithWords(
-        tfIdfCorpus, metricBoundary, stopWordsDictionary
+        tfIdfCorpus, wordsPercent, stopWordsDictionary
     );
 };
 
 createDictionaryWithWords = (
-    wordMetrics, metricBoundary, stopWordsDictionary = undefined
+    wordMetrics, wordsPercent, stopWordsDictionary = undefined
 ) => {
     let dictionary = new TrieDictionary();
     wordMetrics.forEach(text => {
-        text.forEach(wordObject => {
-            if (wordObject.metric >= metricBoundary) {
-                if (stopWordsDictionary !== undefined) {
-                    if (!stopWordsDictionary.isWord(wordObject.word)) {
-                        dictionary.add(wordObject.word);
-                    }
-                } else {
+        const countWordsToAdding = Math.round(
+            text.length * wordsPercent
+        );
+        text.forEach((wordObject, index) => {
+            if (index >= countWordsToAdding) return;
+
+            if (stopWordsDictionary === undefined) {
+                dictionary.add(wordObject.word);
+            } else {
+                if (stopWordsDictionary.isWord(wordObject.word)) {
                     dictionary.add(wordObject.word);
                 }
             }
