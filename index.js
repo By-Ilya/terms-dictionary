@@ -64,9 +64,8 @@ createDictionaryWithWords = (
             if (stopWordsDictionary === undefined) {
                 dictionary.add(wordObject.word);
             } else {
-                if (stopWordsDictionary.isWord(wordObject.word)) {
+                if (stopWordsDictionary.isWord(wordObject.word))
                     dictionary.add(wordObject.word);
-                }
             }
         });
     });
