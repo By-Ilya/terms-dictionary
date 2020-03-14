@@ -4,15 +4,14 @@ calculateTFIDF = (corpus) => {
     corpus.forEach(text => {
         let tfIdfMetricForText = [];
         const tfMetricForText = calculateTF(text);
-        tfMetricForText.forEach((count, word) => {
+        tfMetricForText.forEach((tf, word) => {
             tfIdfMetricForText.push({
                 word: word,
-                metric: count * calculateIDF(word, corpus)
+                metric: tf * calculateIDF(word, corpus)
             });
         });
         tfIdfList.push(
-            tfIdfMetricForText
-                .sort(metricsSortRule)
+            tfIdfMetricForText.sort(metricsSortRule)
         );
     });
 
