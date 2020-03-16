@@ -13,6 +13,7 @@
   "dependencies": {
     "dotenv": "8.2.0",
     "path": "0.12.7",
-    "natural": "0.6.3"
+    "natural": "0.6.3",
+    "lemmatizer": "0.0.1"
   }
 }

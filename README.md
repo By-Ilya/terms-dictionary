@@ -6,7 +6,7 @@ Algorithm performs the following steps:
 1. Extracts texts from `.txt` files that contains texts from three different categories:
 two special categories and one category with different topics.
 2. Creates one corpus with all texts and two corps with texts from special categories.
-3. Analyzes each corpus, tokenizes texts to words an creates list with stems.
+3. Analyzes each corpus, tokenizes texts to words an creates list with lemmas (base form of the word).
 4. Creates **stop words dictionary** and **two terms dictionaries** from specified special categories
 (algorithm based on **TF-IDF metric**).
 5. Writes dictionaries in `.txt` files.
@@ -54,3 +54,4 @@ See the result in the configured `OUTPUT_FOLDER` directory.
 ## Used `Node JS` libraries
 - `natural` (version `0.6.3`) is used for _tokenizing_ input texts from corpus to words
 and creating _stems_ from extracted words.
+- `lemmatizer` (version `0.0.1`) is used for _creating lemmas_ from words.

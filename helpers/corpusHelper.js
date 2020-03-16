@@ -1,4 +1,5 @@
 const natural = require('natural');
+const { lemmatizer } = require('lemmatizer');
 
 const { corpusRootDirectory } = require('../config');
 const {
@@ -15,18 +16,18 @@ getCorpusByCategoryName = async (categoryName, countTexts) => {
         const pathToFile = `${corpusRootDirectory}/${categoryName}/${i + 1}.txt`;
         if (await isFileExists(pathToFile)) {
             const text = await readDataFromFile(pathToFile);
-            corpus.push(getStemsListFromText(text));
+            corpus.push(getLemmasListFromText(text));
         }
     }
 
     return corpus;
 };
 
-getStemsListFromText = (text) => {
+getLemmasListFromText = (text) => {
     const wordsList = tokenizer.tokenize(text);
 
     return wordsList.map(word => {
-        return natural.PorterStemmer.stem(word);
+        return lemmatizer(word);
     });
 };
 

@@ -28,14 +28,17 @@ calculateTF = (text) => {
 };
 
 calculateIDF = (word, corpus) => {
-    let countWordInCorpus = 0;
+    let countTextsWithWord = 0;
     corpus.forEach(text => {
-        text.forEach(w => {
-            countWordInCorpus += isEqual(w, word) ? 1 : 0;
+        text.every(w => {
+            if (isEqual(w, word)) {
+                countTextsWithWord++;
+                return false;
+            } else return true;
         });
     });
 
-    return Math.log10(corpus.length / countWordInCorpus);
+    return Math.log10(corpus.length / countTextsWithWord);
 };
 
 wordsCounter = (text) => {
