@@ -28,6 +28,8 @@ calculateTF = (text) => {
 };
 
 calculateIDF = (word, corpus) => {
+    if (corpus.length === 1) return 1;
+
     let countTextsWithWord = 0;
     corpus.forEach(text => {
         text.every(w => {

@@ -11,10 +11,10 @@ const countTexts = parseInt(process.env.COUNT_TEXTS) || 5;
 
 const stopWordsPercent = parseFloat(
     process.env.STOP_WORDS_PERCENT
-) || 0.2;
+) || 0.05;
 const termsPercent = parseFloat(
     process.env.TERMS_PERCENT
-) || 0.4;
+) || 0.2;
 
 const outputFolder = process.env.OUTPUT_DATA || './output-data';
 

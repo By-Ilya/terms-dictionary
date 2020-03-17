@@ -11,8 +11,6 @@ const writeDictionaryToFile = require('./helpers/dictionaryHelper');
 
 run = async () => {
     let corps = [];
-    let allTexts = [];
-
     console.log(`Read corps in categories: ${categories.join(', ')}...`);
     for (let category of categories) {
         let currentCorpus = await getCorpusByCategory(
@@ -20,12 +18,14 @@ run = async () => {
         );
 
         corps.push(currentCorpus);
-        allTexts = allTexts.concat(currentCorpus);
     }
+
+    console.log(`Merge corps in one text for finding stop words...`);
+    const allWords = mergeCorpsInOneText(corps);
 
     console.log(`Creating stop words dictionary...`);
     const stopWordsDictionary = calculateMetricAndCreateDictionary(
-        allTexts, stopWordsPercent
+        [allWords], stopWordsPercent
     );
     await writeDictionaryToFile(stopWordsDictionary, 'stopWords');
 
@@ -41,10 +41,24 @@ run = async () => {
     process.exit(0);
 };
 
+mergeCorpsInOneText = (corps) => {
+    let allWords = [];
+    corps.forEach(corpus => {
+        corpus.forEach(text => {
+            text.forEach(lemma => {
+                allWords.push(lemma);
+            })
+        })
+    });
+
+    return allWords;
+};
+
 calculateMetricAndCreateDictionary = (
     corpus, wordsPercent, stopWordsDictionary = undefined
 ) => {
     const tfIdfCorpus = calculateTFIDF(corpus);
+
     return createDictionaryWithWords(
         tfIdfCorpus, wordsPercent, stopWordsDictionary
     );
@@ -58,15 +72,22 @@ createDictionaryWithWords = (
         const countWordsToAdding = Math.round(
             text.length * wordsPercent
         );
-        text.forEach((wordObject, index) => {
-            if (index >= countWordsToAdding) return;
+
+        let index = 0;
+        text.every((wordObject) => {
+            if (index >= countWordsToAdding) return false;
 
             if (stopWordsDictionary === undefined) {
                 dictionary.add(wordObject.word);
+                index++;
             } else {
-                if (stopWordsDictionary.isWord(wordObject.word))
+                if (!stopWordsDictionary.isWord(wordObject.word)) {
                     dictionary.add(wordObject.word);
+                    index++;
+                }
             }
+
+            return true;
         });
     });
 
