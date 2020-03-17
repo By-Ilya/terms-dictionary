@@ -38,6 +38,7 @@ with stop words and terms from special categories ((absolute or relative path).
 
 After that, place into `CORPUS_ROOT_DIRECTORY` folders with `CATEGORY_NAME_1`, `CATEGORY_NAME_2`
 and `CATEGORY_OTHERS` names. Each folder should contain `COUNT_TEXTS` texts (`.txt` files).
+Files in each corpus should be named as `1.txt`, `2.txt`, ..., `N.txt`.
 
 As the output you get three `.txt` files, that will be located in `OUTPUT_FOLDER` directory:
 - `stopWords.txt` that contains calculated stop words;
