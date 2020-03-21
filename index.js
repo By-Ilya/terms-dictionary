@@ -1,6 +1,5 @@
 const {
     categories,
-    countTexts,
     stopWordsPercent,
     termsPercent
 } = require('./config');
@@ -13,10 +12,7 @@ run = async () => {
     let corps = [];
     console.log(`Read corps in categories: ${categories.join(', ')}...`);
     for (let category of categories) {
-        let currentCorpus = await getCorpusByCategory(
-            category, countTexts
-        );
-
+        let currentCorpus = await getCorpusByCategory(category);
         corps.push(currentCorpus);
     }
 

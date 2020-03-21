@@ -27,8 +27,6 @@ two special categories and one category with different topics.
 (and folder name for it in `CORPUS_ROOT_DIRECTORY`).
 - `CATEGORY_OTHERS`: `string` value, that specified the name of the others texts
 (and folder name for it in `CORPUS_ROOT_DIRECTORY`).
-- `COUNT_TEXTS`: `int` value, that specified count of texts, that will be analyzed in each category
-(count `.txt` input files in each category).
 - `STOP_WORDS_PERCENT`: `float` value, that specified the percent of words from dictionary,
 that can be attributed to the stop words.
 - `TERMS_PERCENT`: `float` value, that specified the percent of words from dictionary, 
@@ -37,8 +35,7 @@ that can be attributed to the terms words from each special category.
 with stop words and terms from special categories ((absolute or relative path).
 
 After that, place into `CORPUS_ROOT_DIRECTORY` folders with `CATEGORY_NAME_1`, `CATEGORY_NAME_2`
-and `CATEGORY_OTHERS` names. Each folder should contain `COUNT_TEXTS` texts (`.txt` files).
-Files in each corpus should be named as `1.txt`, `2.txt`, ..., `N.txt`.
+and `CATEGORY_OTHERS` names.
 
 As the output you get three `.txt` files, that will be located in `OUTPUT_FOLDER` directory:
 - `stopWords.txt` that contains calculated stop words;

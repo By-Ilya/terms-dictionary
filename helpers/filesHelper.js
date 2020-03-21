@@ -11,6 +11,17 @@ isFileExists = async filePath => {
     }
 };
 
+getFilesFromDirectory = async (dirPath) => {
+    const resolvedDirPath = path.resolve(dirPath);
+    return  (async () => {
+        try {
+            return await fs.readdir(resolvedDirPath);
+        } catch (err) {
+            throw err;
+        }
+    })();
+};
+
 getDocumentName = filePath => {
     const fileExt = path.extname(filePath);
     return path.basename(filePath, fileExt);
@@ -59,6 +70,7 @@ deleteFile = async (filePath) => {
 
 module.exports = {
     isFileExists,
+    getFilesFromDirectory,
     getDocumentName,
     readDataBufferFromFile,
     readDataFromFile,
