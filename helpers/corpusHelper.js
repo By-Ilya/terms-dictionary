@@ -4,16 +4,20 @@ const { lemmatizer } = require('lemmatizer');
 const { corpusRootDirectory } = require('../config');
 const {
     isFileExists,
+    getFilesFromDirectory,
     readDataFromFile,
 } = require('./filesHelper');
 
 const tokenizer = new natural.WordTokenizer();
 
-getCorpusByCategoryName = async (categoryName, countTexts) => {
+getCorpusByCategoryName = async (categoryName) => {
     let corpus = [];
 
-    for (let i = 0; i < countTexts; i++) {
-        const pathToFile = `${corpusRootDirectory}/${categoryName}/${i + 1}.txt`;
+    const categoryPath = `./${corpusRootDirectory}/${categoryName}`;
+    const filesList = await getFilesFromDirectory(categoryPath);
+
+    for (let fileName of filesList) {
+        const pathToFile = `${categoryPath}/${fileName}`;
         if (await isFileExists(pathToFile)) {
             const text = await readDataFromFile(pathToFile);
             corpus.push(getLemmasListFromText(text));

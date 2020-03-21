@@ -7,8 +7,6 @@ const categories = [
     process.env.CATEGORY_OTHERS || 'others'
 ];
 
-const countTexts = parseInt(process.env.COUNT_TEXTS) || 5;
-
 const stopWordsPercent = parseFloat(
     process.env.STOP_WORDS_PERCENT
 ) || 0.05;
@@ -22,7 +20,6 @@ const outputFolder = process.env.OUTPUT_DATA || './output-data';
 module.exports = {
     corpusRootDirectory,
     categories,
-    countTexts,
     stopWordsPercent,
     termsPercent,
     outputFolder
